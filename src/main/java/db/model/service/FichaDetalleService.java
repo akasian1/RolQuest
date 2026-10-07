@@ -7,4 +7,6 @@ public class FichaDetalleService extends GenericServiceImpl<FichaDetalle,Integer
     public FichaDetalleService() {
         super(new FichaDetalleDAO());
     }
+
+
 }

@@ -16,40 +16,59 @@ public static void main(String[] args) {
     PartidaService partidaService = new PartidaService();
     FichaDetalleService fichaDetalleService = new FichaDetalleService();
 
-    // 1. Crear un personaje
     Personaje p = new Personaje();
     p.setNombre("Ayla la Hechicera");
     p.setClase(ClasePersonaje.MAGO);
     p.setNivel(5);
     p.setPuntosVida(80);
     p.setArmaPrincipal("Bastón del Alba");
-    int idPersonaje = personajeService.create(p);
 
 
-    FichaDetalle fD = new FichaDetalle();
-    fD.setRaza("Elfa");
-    fD.setDescripcion("Elfa Maga");
-    fD.setDeidad("D");
-    fD.setAlineamiento("A");
-    fD.setPersonaje(personajeService.findById(idPersonaje));
-    fichaDetalleService.create(fD);
+   FichaDetalle fD = new FichaDetalle();
+   fD.setRaza("Elfa");
+   fD.setDescripcion("Elfa Maga");
+   fD.setDeidad("D");
+   fD.setAlineamiento("A");
+   fD.setPersonaje(p);
+
+   p.setFichaDetalle(fD);
 
 
-    // 2. Crear una misión
+    Partida partida = new Partida();
+    partida.setNombre("La leyenda de Ayla");
+    partida.setNumeroJugadores(4);
+    partida.setEstado(Estado.EN_CURSO);
+
     Mision m = new Mision();
     m.setTitulo("El Bosque de las Sombras");
     m.setDescripcion("Explora las ruinas antiguas y vence a la Sombra del Olvido.");
     m.setDificultad(Dificultad.ALTA);
     m.setRecompensa(500);
     m.setActiva(true);
-    misionService.create(m);
+    m.setPartida(partida);
+//    misionService.create(m);
 
-    // 3. Crear una partida
-    Partida partida = new Partida();
-    partida.setNombre("La leyenda de Ayla");
-    partida.setNumeroJugadores(4);
-    partida.setEstado(Estado.EN_CURSO);
+    Mision m2 = new Mision();
+    m2.setTitulo("La cueva");
+    m2.setDescripcion("Explora.");
+    m2.setDificultad(Dificultad.BAJA);
+    m2.setRecompensa(100);
+    m2.setActiva(false);
+    m2.setPartida(partida);
+//    misionService.create(m2);
+
+    partida.getMisiones().add(m);
+    partida.getMisiones().add(m2);
     partidaService.create(partida);
+
+    p.getMisiones().add(m);
+    p.getMisiones().add(m2);
+
+    personajeService.create(p);
+    fichaDetalleService.create(fD);
+
+
+
 
     System.out.println("Datos iniciales añadidos correctamente.");
 }

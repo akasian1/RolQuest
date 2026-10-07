@@ -3,6 +3,9 @@ package db.model.entity;
 import db.model.enums.ClasePersonaje;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "Personaje")
 public class Personaje {
@@ -25,6 +28,33 @@ public class Personaje {
 
     @Column(name = "ArmaPrincipal")
     private String armaPrincipal;
+
+    @OneToOne(mappedBy = "personaje")
+    private FichaDetalle fichaDetalle;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "Personaje_Mision",
+            joinColumns = @JoinColumn(name = "personajeID"),
+            inverseJoinColumns = @JoinColumn(name = "misionID")
+    )
+    private List<Mision> misiones = new ArrayList<>();
+
+    public List<Mision> getMisiones() {
+        return misiones;
+    }
+
+    public void setMisiones(List<Mision> misiones) {
+        this.misiones = misiones;
+    }
+
+    public FichaDetalle getFichaDetalle() {
+        return fichaDetalle;
+    }
+
+    public void setFichaDetalle(FichaDetalle fichaDetalle) {
+        this.fichaDetalle = fichaDetalle;
+    }
 
     public int getPersonajeID() {
         return personajeID;

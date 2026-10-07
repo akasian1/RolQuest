@@ -10,7 +10,7 @@ import static db.model.service.GenericConstants.*;
 
 public abstract class GenericServiceImpl<T, ID> implements GenericService<T, ID> {
     protected GenericDAO<T, ID> dao;
-    private final Logger logger = LogManager.getLogger(GenericServiceImpl.class);
+    protected final Logger logger = LogManager.getLogger(GenericServiceImpl.class);
 
     public GenericServiceImpl(GenericDAO<T, ID> dao) {
         this.dao = dao;

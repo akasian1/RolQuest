@@ -22,7 +22,7 @@ public class FichaDetalle {
     private String deidad;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Personaje", nullable = false)
+    @JoinColumn(name = "Personaje", nullable = false, unique = true)
     private Personaje personaje;
 
     public int getFichaID() {

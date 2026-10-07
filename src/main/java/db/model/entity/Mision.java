@@ -3,6 +3,9 @@ package db.model.entity;
 import db.model.enums.Dificultad;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "Mision")
 public class Mision {
@@ -25,6 +28,21 @@ public class Mision {
 
     @Column(name = "Activa", nullable = false)
     private Boolean activa;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Partida", nullable = false)
+    private Partida partida;
+
+    @ManyToMany(mappedBy = "misiones")
+    private List<Personaje> personajes = new ArrayList<>();
+
+    public Partida getPartida() {
+        return partida;
+    }
+
+    public void setPartida(Partida partida) {
+        this.partida = partida;
+    }
 
     public int getMisionID() {
         return misionID;

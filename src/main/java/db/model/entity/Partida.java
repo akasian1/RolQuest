@@ -3,7 +3,9 @@ package db.model.entity;
 import db.model.enums.Estado;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Partida")
@@ -24,6 +26,17 @@ public class Partida {
     @Enumerated(EnumType.STRING)
     @Column(name = "Estado", nullable = false)
     private Estado estado;
+
+    @OneToMany(mappedBy = "partida", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Mision> misiones = new ArrayList<>();
+
+    public List<Mision> getMisiones() {
+        return misiones;
+    }
+
+    public void setMisiones(List<Mision> misiones) {
+        this.misiones = misiones;
+    }
 
     public int getPartidaID() {
         return partidaID;
